@@ -8,14 +8,14 @@
     {
         public static void Main(string[] args)
         {
-            var creature = new Creature(birthProbabilityPerStep: 1, deathProbabilityPerCreaturePerStep: 0.1);
+            var creature = new Creature(spontaneousBirthProbabilityPerStep: 0.1, deathProbabilityPerCreaturePerStep: 0.05, replicationProbabilityPerStep: 0.03);
 
-            var populationHistoryDistribution = new PopulationHistoryDistribution(creature, initialPopulation: 100);
+            var populationHistoryDistribution = new PopulationHistoryDistribution(creature, initialPopulation: 0);
 
             foreach (var population in populationHistoryDistribution.Sample())
             {
                 Console.WriteLine(population);
-                Thread.Sleep(100);
+                Thread.Sleep(10);
             }
         }
     }

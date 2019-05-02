@@ -4,14 +4,17 @@
 
     public class Creature
     {
-        public Creature(double birthProbabilityPerStep, double deathProbabilityPerCreaturePerStep)
+        public Creature(double spontaneousBirthProbabilityPerStep, double deathProbabilityPerCreaturePerStep, double replicationProbabilityPerStep)
         {
-            this.BirthDistribution = Bernoulli.Distribution(birthProbabilityPerStep);
+            this.SpontaneousBirthDistribution = Bernoulli.Distribution(spontaneousBirthProbabilityPerStep);
             this.DeathDistribution = Bernoulli.Distribution(deathProbabilityPerCreaturePerStep);
+            this.ReplicationDistribution = Bernoulli.Distribution(replicationProbabilityPerStep);
         }
 
-        public IDistribution<bool> BirthDistribution { get; }
+        public IDistribution<bool> SpontaneousBirthDistribution { get; }
 
         public IDistribution<bool> DeathDistribution { get; }
+
+        public IDistribution<bool> ReplicationDistribution { get; }
     }
 }

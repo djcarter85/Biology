@@ -16,13 +16,17 @@
 
         public int Sample()
         {
-            var newCreatures = this.creature.BirthDistribution.Sample() ? 1 : 0;
+            var spontaneousBirths = this.creature.SpontaneousBirthDistribution.Sample() ? 1 : 0;
 
-            var dyingCreatures = this.creature.DeathDistribution
+            var replicationBirths = this.creature.ReplicationDistribution
                 .TakeSamples(this.population)
                 .Count(b => b);
 
-            return this.population + newCreatures - dyingCreatures;
+            var deaths = this.creature.DeathDistribution
+                .TakeSamples(this.population)
+                .Count(b => b);
+
+            return this.population + spontaneousBirths + replicationBirths - deaths;
         }
     }
 }
