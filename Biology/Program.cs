@@ -1,6 +1,7 @@
 ﻿namespace Biology
 {
     using System;
+    using System.Threading;
     using Biology.Core;
 
     public static class Program
@@ -9,14 +10,13 @@
         {
             var creature = new Creature(birthProbabilityPerStep: 1, deathProbabilityPerCreaturePerStep: 0.1);
 
-            var populationHistoryDistribution = new PopulationHistoryDistribution(creature, initialPopulation: 100, steps: 200);
+            var populationHistoryDistribution = new PopulationHistoryDistribution(creature, initialPopulation: 100);
 
-            do
+            foreach (var population in populationHistoryDistribution.Sample())
             {
-                var populations = populationHistoryDistribution.Sample();
-
-                Console.WriteLine(string.Join(",", populations));
-            } while (string.IsNullOrEmpty(Console.ReadLine()));
+                Console.WriteLine(population);
+                Thread.Sleep(100);
+            }
         }
     }
 }

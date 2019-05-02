@@ -7,20 +7,18 @@
     {
         private readonly Creature creature;
         private readonly int initialPopulation;
-        private readonly int steps;
 
-        public PopulationHistoryDistribution(Creature creature, int initialPopulation, int steps)
+        public PopulationHistoryDistribution(Creature creature, int initialPopulation)
         {
             this.creature = creature;
             this.initialPopulation = initialPopulation;
-            this.steps = steps;
         }
 
         public IEnumerable<int> Sample()
         {
             var currentPopulation = this.initialPopulation;
 
-            for (int i = 0; i < this.steps; i++)
+            while (true)
             {
                 yield return currentPopulation;
                 currentPopulation = new PopulationDistribution(this.creature, currentPopulation).Sample();
