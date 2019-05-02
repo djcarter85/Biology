@@ -3,12 +3,12 @@
     using System.Collections.Generic;
     using Biology.Core.Randomness;
 
-    public class PopulationHistoryDistribution : IDistribution<IEnumerable<int>>
+    public class InfinitePopulationHistoryDistribution : IDistribution<IEnumerable<int>>
     {
         private readonly Creature creature;
         private readonly int initialPopulation;
 
-        public PopulationHistoryDistribution(Creature creature, int initialPopulation)
+        public InfinitePopulationHistoryDistribution(Creature creature, int initialPopulation)
         {
             this.creature = creature;
             this.initialPopulation = initialPopulation;
