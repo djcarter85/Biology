@@ -42,7 +42,7 @@
             foreach (var populations in populationHistoryDistribution.Sample())
             {
                 Console.WriteLine(string.Join(", ", populations.Select(kvp => $"{kvp.Key}: {kvp.Value:00}")));
-                Thread.Sleep(10);
+                Thread.Sleep(50);
             }
         }
     }
