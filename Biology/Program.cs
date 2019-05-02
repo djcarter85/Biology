@@ -17,11 +17,23 @@
                     .WithDeathProbabilityPerCreature(0.1)
                     .WithReplicationProbabilityPerCreature(0.05)
                     .WithMutationProbability(CreatureType.Green, 0.1)
+                    .WithMutationProbability(CreatureType.Red, 0.1)
                     .Build(),
                 CreatureBuilder.Create(CreatureType.Green)
                     .WithSpontaneousBirthProbability(0)
                     .WithDeathProbabilityPerCreature(0.1)
                     .WithReplicationProbabilityPerCreature(0.05)
+                    .Build(),
+                CreatureBuilder.Create(CreatureType.Red)
+                    .WithSpontaneousBirthProbability(0)
+                    .WithDeathProbabilityPerCreature(0.05)
+                    .WithReplicationProbabilityPerCreature(0.05)
+                    .WithMutationProbability(CreatureType.Orange, 0.05)
+                    .Build(),
+                CreatureBuilder.Create(CreatureType.Orange)
+                    .WithSpontaneousBirthProbability(0)
+                    .WithDeathProbabilityPerCreature(0.05)
+                    .WithReplicationProbabilityPerCreature(0.1)
                     .Build(),
             };
 

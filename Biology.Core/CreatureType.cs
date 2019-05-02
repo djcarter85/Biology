@@ -3,6 +3,8 @@
     public enum CreatureType
     {
         Blue,
-        Green
+        Green,
+        Red,
+        Orange
     }
 }
