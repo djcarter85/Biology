@@ -14,19 +14,20 @@
             {
                 {
                     CreatureType.Blue,
-                    new Creature(
-                        spontaneousBirthProbabilityPerStep: 1,
-                        deathProbabilityPerCreaturePerStep: 0.1,
-                        replicationProbabilityPerStep: 0.05,
-                        new Dictionary<CreatureType, double> {{CreatureType.Blue, 0.9}, {CreatureType.Green, 0.1}})
+                    CreatureBuilder.Create(CreatureType.Blue)
+                        .WithSpontaneousBirthProbability(1)
+                        .WithDeathProbabilityPerCreature(0.1)
+                        .WithReplicationProbabilityPerCreature(0.05)
+                        .WithMutationProbability(CreatureType.Green, 0.1)
+                        .Build()
                 },
                 {
                     CreatureType.Green,
-                    new Creature(
-                        spontaneousBirthProbabilityPerStep: 0,
-                        deathProbabilityPerCreaturePerStep: 0.1,
-                        replicationProbabilityPerStep: 0.05,
-                        new Dictionary<CreatureType, double> {{CreatureType.Green, 1}})
+                    CreatureBuilder.Create(CreatureType.Green)
+                        .WithSpontaneousBirthProbability(0)
+                        .WithDeathProbabilityPerCreature(0.1)
+                        .WithReplicationProbabilityPerCreature(0.05)
+                        .Build()
                 },
             };
 
