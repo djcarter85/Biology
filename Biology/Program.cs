@@ -1,6 +1,8 @@
 ﻿namespace Biology
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Threading;
     using Biology.Core;
 
@@ -8,13 +10,28 @@
     {
         public static void Main(string[] args)
         {
-            var creature = new Creature(spontaneousBirthProbabilityPerStep: 0.1, deathProbabilityPerCreaturePerStep: 0.05, replicationProbabilityPerStep: 0.03);
-
-            var populationHistoryDistribution = new InfinitePopulationHistoryDistribution(creature, initialPopulation: 0);
-
-            foreach (var population in populationHistoryDistribution.Sample())
+            var creatures = new Dictionary<CreatureType, Creature>
             {
-                Console.WriteLine(population);
+                {
+                    CreatureType.Blue,
+                    new Creature(
+                        spontaneousBirthProbabilityPerStep: 1,
+                        deathProbabilityPerCreaturePerStep: 0.1,
+                        replicationProbabilityPerStep: 0.05,
+                        new Dictionary<CreatureType, double> {{CreatureType.Blue, 1}})
+                },
+            };
+
+            var initialPopulations = new Dictionary<CreatureType, int>
+            {
+                {CreatureType.Blue, 0},
+            };
+
+            var populationHistoryDistribution = new InfinitePopulationHistoryDistribution(creatures, initialPopulations);
+
+            foreach (var populations in populationHistoryDistribution.Sample())
+            {
+                Console.WriteLine(string.Join(", ", populations.Select(kvp => $"{kvp.Key}: {kvp.Value:00}")));
                 Thread.Sleep(10);
             }
         }

@@ -4,18 +4,21 @@
     using System.Linq;
     using Biology.Core.Randomness;
 
-    public class LimitedPopulationHistoryDistribution : IDistribution<IReadOnlyList<int>>
+    public class LimitedPopulationHistoryDistribution : IDistribution<IReadOnlyList<IReadOnlyDictionary<CreatureType, int>>>
     {
         private readonly InfinitePopulationHistoryDistribution infinitePopulationHistoryDistribution;
         private readonly int steps;
 
-        public LimitedPopulationHistoryDistribution(Creature creature, int initialPopulation, int steps)
+        public LimitedPopulationHistoryDistribution(
+            IReadOnlyDictionary<CreatureType, Creature> creatures,
+            IReadOnlyDictionary<CreatureType, int> initialPopulations,
+            int steps)
         {
-            this.infinitePopulationHistoryDistribution = new InfinitePopulationHistoryDistribution(creature, initialPopulation);
+            this.infinitePopulationHistoryDistribution = new InfinitePopulationHistoryDistribution(creatures, initialPopulations);
             this.steps = steps;
         }
 
-        public IReadOnlyList<int> Sample()
+        public IReadOnlyList<IReadOnlyDictionary<CreatureType, int>> Sample()
         {
             return this.infinitePopulationHistoryDistribution.Sample()
                 .Take(this.steps)

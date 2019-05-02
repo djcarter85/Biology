@@ -3,25 +3,27 @@
     using System.Collections.Generic;
     using Biology.Core.Randomness;
 
-    public class InfinitePopulationHistoryDistribution : IDistribution<IEnumerable<int>>
+    public class InfinitePopulationHistoryDistribution : IDistribution<IEnumerable<IReadOnlyDictionary<CreatureType, int>>>
     {
-        private readonly Creature creature;
-        private readonly int initialPopulation;
+        private readonly IReadOnlyDictionary<CreatureType, Creature> creatures;
+        private readonly IReadOnlyDictionary<CreatureType, int> initialPopulations;
 
-        public InfinitePopulationHistoryDistribution(Creature creature, int initialPopulation)
+        public InfinitePopulationHistoryDistribution(
+            IReadOnlyDictionary<CreatureType, Creature> creatures,
+            IReadOnlyDictionary<CreatureType, int> initialPopulations)
         {
-            this.creature = creature;
-            this.initialPopulation = initialPopulation;
+            this.creatures = creatures;
+            this.initialPopulations = initialPopulations;
         }
 
-        public IEnumerable<int> Sample()
+        public IEnumerable<IReadOnlyDictionary<CreatureType, int>> Sample()
         {
-            var currentPopulation = this.initialPopulation;
+            var currentPopulations = this.initialPopulations;
 
             while (true)
             {
-                yield return currentPopulation;
-                currentPopulation = new PopulationDistribution(this.creature, currentPopulation).Sample();
+                yield return currentPopulations;
+                currentPopulations = new PopulationDistribution(this.creatures, currentPopulations).Sample();
             }
         }
     }

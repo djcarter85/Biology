@@ -1,32 +1,55 @@
 ﻿namespace Biology.Core
 {
+    using System.Collections.Generic;
     using System.Linq;
     using Biology.Core.Randomness;
 
-    public class PopulationDistribution : IDistribution<int>
+    public class PopulationDistribution : IDistribution<IReadOnlyDictionary<CreatureType, int>>
     {
-        private readonly Creature creature;
-        private readonly int population;
+        private readonly IReadOnlyDictionary<CreatureType, Creature> creatures;
+        private readonly IReadOnlyDictionary<CreatureType, int> initialPopulations;
 
-        public PopulationDistribution(Creature creature, int population)
+        public PopulationDistribution(
+            IReadOnlyDictionary<CreatureType, Creature> creatures,
+            IReadOnlyDictionary<CreatureType, int> initialPopulations)
         {
-            this.creature = creature;
-            this.population = population;
+            this.creatures = creatures;
+            this.initialPopulations = initialPopulations;
         }
 
-        public int Sample()
+        public IReadOnlyDictionary<CreatureType, int> Sample()
         {
-            var spontaneousBirths = this.creature.SpontaneousBirthDistribution.Sample() ? 1 : 0;
+            var resultantPopulations = this.initialPopulations.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
 
-            var replicationBirths = this.creature.ReplicationDistribution
-                .TakeSamples(this.population)
-                .Count(b => b);
+            foreach (var keyValuePair in this.creatures)
+            {
+                var creatureType = keyValuePair.Key;
+                var creature = keyValuePair.Value;
+                var initialPopulation = this.initialPopulations[creatureType];
 
-            var deaths = this.creature.DeathDistribution
-                .TakeSamples(this.population)
-                .Count(b => b);
+                var spontaneousBirths = creature.SpontaneousBirthDistribution.Sample() ? 1 : 0;
 
-            return this.population + spontaneousBirths + replicationBirths - deaths;
+                var deaths = creature.DeathDistribution
+                    .TakeSamples(initialPopulation)
+                    .Count(b => b);
+
+                resultantPopulations[creatureType] += spontaneousBirths - deaths;
+
+                var replicationBirths = creature.ReplicationDistribution
+                    .TakeSamples(initialPopulation)
+                    .Count(b => b);
+
+                var groupBy = creature.MutationDistribution
+                    .TakeSamples(replicationBirths)
+                    .GroupBy(ct => ct);
+
+                foreach (var grouping in groupBy)
+                {
+                    resultantPopulations[grouping.Key] += grouping.Count();
+                }
+            }
+
+            return resultantPopulations;
         }
     }
 }
