@@ -25,13 +25,7 @@
                     .Build(),
             };
 
-            var initialPopulations = new Dictionary<CreatureType, int>
-            {
-                {CreatureType.Blue, 0},
-                {CreatureType.Green, 0},
-            };
-
-            var populationHistoryDistribution = new InfinitePopulationHistoryDistribution(creatures, initialPopulations);
+            var populationHistoryDistribution = new InfinitePopulationHistoryDistribution(creatures);
 
             foreach (var populations in populationHistoryDistribution.Sample())
             {

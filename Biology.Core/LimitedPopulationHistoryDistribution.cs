@@ -1,20 +1,17 @@
 ﻿namespace Biology.Core
 {
+    using Biology.Core.Randomness;
     using System.Collections.Generic;
     using System.Linq;
-    using Biology.Core.Randomness;
 
     public class LimitedPopulationHistoryDistribution : IDistribution<IReadOnlyList<IReadOnlyDictionary<CreatureType, int>>>
     {
         private readonly InfinitePopulationHistoryDistribution infinitePopulationHistoryDistribution;
         private readonly int steps;
 
-        public LimitedPopulationHistoryDistribution(
-            IReadOnlyList<Creature> creatures,
-            IReadOnlyDictionary<CreatureType, int> initialPopulations,
-            int steps)
+        public LimitedPopulationHistoryDistribution(IReadOnlyList<Creature> creatures, int steps)
         {
-            this.infinitePopulationHistoryDistribution = new InfinitePopulationHistoryDistribution(creatures, initialPopulations);
+            this.infinitePopulationHistoryDistribution = new InfinitePopulationHistoryDistribution(creatures);
             this.steps = steps;
         }
 
