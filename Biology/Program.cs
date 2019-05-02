@@ -18,13 +18,22 @@
                         spontaneousBirthProbabilityPerStep: 1,
                         deathProbabilityPerCreaturePerStep: 0.1,
                         replicationProbabilityPerStep: 0.05,
-                        new Dictionary<CreatureType, double> {{CreatureType.Blue, 1}})
+                        new Dictionary<CreatureType, double> {{CreatureType.Blue, 0.9}, {CreatureType.Green, 0.1}})
+                },
+                {
+                    CreatureType.Green,
+                    new Creature(
+                        spontaneousBirthProbabilityPerStep: 0,
+                        deathProbabilityPerCreaturePerStep: 0.1,
+                        replicationProbabilityPerStep: 0.05,
+                        new Dictionary<CreatureType, double> {{CreatureType.Green, 1}})
                 },
             };
 
             var initialPopulations = new Dictionary<CreatureType, int>
             {
                 {CreatureType.Blue, 0},
+                {CreatureType.Green, 0},
             };
 
             var populationHistoryDistribution = new InfinitePopulationHistoryDistribution(creatures, initialPopulations);
