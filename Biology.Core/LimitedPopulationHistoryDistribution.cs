@@ -10,7 +10,7 @@
         private readonly int steps;
 
         public LimitedPopulationHistoryDistribution(
-            IReadOnlyDictionary<CreatureType, Creature> creatures,
+            IReadOnlyList<Creature> creatures,
             IReadOnlyDictionary<CreatureType, int> initialPopulations,
             int steps)
         {

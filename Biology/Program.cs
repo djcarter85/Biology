@@ -10,25 +10,19 @@
     {
         public static void Main(string[] args)
         {
-            var creatures = new Dictionary<CreatureType, Creature>
+            var creatures = new List<Creature>
             {
-                {
-                    CreatureType.Blue,
-                    CreatureBuilder.Create(CreatureType.Blue)
-                        .WithSpontaneousBirthProbability(1)
-                        .WithDeathProbabilityPerCreature(0.1)
-                        .WithReplicationProbabilityPerCreature(0.05)
-                        .WithMutationProbability(CreatureType.Green, 0.1)
-                        .Build()
-                },
-                {
-                    CreatureType.Green,
-                    CreatureBuilder.Create(CreatureType.Green)
-                        .WithSpontaneousBirthProbability(0)
-                        .WithDeathProbabilityPerCreature(0.1)
-                        .WithReplicationProbabilityPerCreature(0.05)
-                        .Build()
-                },
+                CreatureBuilder.Create(CreatureType.Blue)
+                    .WithSpontaneousBirthProbability(1)
+                    .WithDeathProbabilityPerCreature(0.1)
+                    .WithReplicationProbabilityPerCreature(0.05)
+                    .WithMutationProbability(CreatureType.Green, 0.1)
+                    .Build(),
+                CreatureBuilder.Create(CreatureType.Green)
+                    .WithSpontaneousBirthProbability(0)
+                    .WithDeathProbabilityPerCreature(0.1)
+                    .WithReplicationProbabilityPerCreature(0.05)
+                    .Build(),
             };
 
             var initialPopulations = new Dictionary<CreatureType, int>

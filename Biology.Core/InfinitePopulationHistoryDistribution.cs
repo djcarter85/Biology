@@ -5,11 +5,11 @@
 
     public class InfinitePopulationHistoryDistribution : IDistribution<IEnumerable<IReadOnlyDictionary<CreatureType, int>>>
     {
-        private readonly IReadOnlyDictionary<CreatureType, Creature> creatures;
+        private readonly IReadOnlyList<Creature> creatures;
         private readonly IReadOnlyDictionary<CreatureType, int> initialPopulations;
 
         public InfinitePopulationHistoryDistribution(
-            IReadOnlyDictionary<CreatureType, Creature> creatures,
+            IReadOnlyList<Creature> creatures,
             IReadOnlyDictionary<CreatureType, int> initialPopulations)
         {
             this.creatures = creatures;

@@ -5,13 +5,21 @@
 
     public class Creature
     {
-        public Creature(double spontaneousBirthProbabilityPerStep, double deathProbabilityPerCreaturePerStep, double replicationProbabilityPerStep, IReadOnlyDictionary<CreatureType, double> mutationWeights)
+        public Creature(
+            CreatureType type,
+            double spontaneousBirthProbabilityPerStep, 
+            double deathProbabilityPerCreaturePerStep, 
+            double replicationProbabilityPerStep, 
+            IReadOnlyDictionary<CreatureType, double> mutationWeights)
         {
+            this.Type = type;
             this.SpontaneousBirthDistribution = Bernoulli.Distribution(spontaneousBirthProbabilityPerStep);
             this.DeathDistribution = Bernoulli.Distribution(deathProbabilityPerCreaturePerStep);
             this.ReplicationDistribution = Bernoulli.Distribution(replicationProbabilityPerStep);
             this.MutationDistribution = new Weighted<CreatureType>(mutationWeights);
         }
+
+        public CreatureType Type { get; }
 
         public IDistribution<bool> SpontaneousBirthDistribution { get; }
 

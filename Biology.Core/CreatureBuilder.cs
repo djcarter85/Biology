@@ -62,6 +62,7 @@
             this.mutationProbabilities[this.type] = 1.0 - this.mutationProbabilities.Values.Sum();
 
             return new Creature(
+                this.type,
                 this.spontaneousBirthProbabilityPerStep,
                 this.deathProbabilityPerCreaturePerStep,
                 this.replicationProbabilityPerCreaturePerStep,
