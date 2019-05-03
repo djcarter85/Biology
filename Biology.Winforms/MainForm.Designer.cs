@@ -75,6 +75,7 @@
             chartArea1.AxisY.LineColor = System.Drawing.Color.Gainsboro;
             chartArea1.AxisY.MajorGrid.LineColor = System.Drawing.Color.Gainsboro;
             chartArea1.AxisY.MajorTickMark.LineColor = System.Drawing.Color.Gainsboro;
+            chartArea1.AxisY.Maximum = 80D;
             chartArea1.AxisY.Title = "Population";
             chartArea1.Name = "ChartArea1";
             this.chart.ChartAreas.Add(chartArea1);
