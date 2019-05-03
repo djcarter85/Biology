@@ -6,11 +6,14 @@
     using System.Threading;
     using System.Threading.Tasks;
     using System.Windows.Forms;
+    using System.Windows.Forms.DataVisualization.Charting;
     using Biology.Core;
 
     public partial class MainForm : Form
     {
         private readonly IEnumerator<IReadOnlyDictionary<CreatureType, int>> enumerator;
+
+        private int generation = 0;
 
         private CancellationTokenSource cancellationSource;
 
@@ -59,9 +62,9 @@
 
             while (this.enumerator.MoveNext())
             {
-                var populations = this.enumerator.Current;
+                this.generationsLabel.Text = $"Gen: {this.generation}";
 
-                this.label1.Text = string.Join(", ", populations.Select(kvp => $"{kvp.Key}: {kvp.Value:00}"));
+                this.DisplayChart(this.enumerator.Current);
 
                 if (this.cancellationSource.IsCancellationRequested)
                 {
@@ -69,6 +72,19 @@
                 }
 
                 await Task.Delay(50);
+
+                this.generation++;
+            }
+        }
+
+        private void DisplayChart(IReadOnlyDictionary<CreatureType, int> populations)
+        {
+            var series = this.chart.Series[0];
+            series.Points.Clear();
+
+            foreach (var keyValuePair in populations)
+            {
+                series.Points.AddXY(keyValuePair.Key.ToString(), keyValuePair.Value);
             }
         }
 
