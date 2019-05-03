@@ -27,7 +27,7 @@
 
                 var spontaneousBirths = creature.SpontaneousBirthDistribution.Sample() ? 1 : 0;
 
-                var deaths = creature.DeathDistribution
+                var deaths = creature.DeathDistribution(initialPopulation)
                     .TakeSamples(initialPopulation)
                     .Count(b => b);
 

@@ -44,6 +44,7 @@
                 CreatureBuilder.Create(CreatureType.Orange)
                     .WithSpontaneousBirthProbability(0)
                     .WithDeathProbabilityPerCreature(0.05)
+                    .WithCrowdingCoefficient(0.001)
                     .WithReplicationProbabilityPerCreature(0.1)
                     .Build(),
             };

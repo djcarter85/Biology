@@ -12,9 +12,10 @@
 
         private double spontaneousBirthProbabilityPerStep;
         private double deathProbabilityPerCreaturePerStep;
+        private double crowdingCoefficient;
         private double replicationProbabilityPerCreaturePerStep;
 
-        public CreatureBuilder(CreatureType type)
+        private CreatureBuilder(CreatureType type)
         {
             this.type = type;
         }
@@ -34,6 +35,13 @@
         public CreatureBuilder WithDeathProbabilityPerCreature(double deathProbabilityPerCreature)
         {
             this.deathProbabilityPerCreaturePerStep = deathProbabilityPerCreature;
+
+            return this;
+        }
+
+        public CreatureBuilder WithCrowdingCoefficient(double crowdingCoefficient)
+        {
+            this.crowdingCoefficient = crowdingCoefficient;
 
             return this;
         }
@@ -65,6 +73,7 @@
                 this.type,
                 this.spontaneousBirthProbabilityPerStep,
                 this.deathProbabilityPerCreaturePerStep,
+                this.crowdingCoefficient,
                 this.replicationProbabilityPerCreaturePerStep,
                 this.mutationProbabilities);
         }
