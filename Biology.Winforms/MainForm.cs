@@ -1,16 +1,23 @@
 ﻿namespace Biology.Winforms
 {
+    using Biology.Core;
     using System;
     using System.Collections.Generic;
-    using System.Linq;
+    using System.Drawing;
     using System.Threading;
     using System.Threading.Tasks;
     using System.Windows.Forms;
-    using System.Windows.Forms.DataVisualization.Charting;
-    using Biology.Core;
 
     public partial class MainForm : Form
     {
+        private static readonly IReadOnlyDictionary<CreatureType, Color> Colors = new Dictionary<CreatureType, Color>
+        {
+            {CreatureType.Blue, Color.Blue},
+            {CreatureType.Green, Color.Green},
+            {CreatureType.Red, Color.Red},
+            {CreatureType.Orange, Color.Orange},
+        };
+
         private readonly IEnumerator<IReadOnlyDictionary<CreatureType, int>> enumerator;
 
         private int generation = 0;
@@ -85,7 +92,11 @@
 
             foreach (var keyValuePair in populations)
             {
-                series.Points.AddXY(keyValuePair.Key.ToString(), keyValuePair.Value);
+                var creatureType = keyValuePair.Key;
+                var population = keyValuePair.Value;
+
+                var index = series.Points.AddXY(creatureType.ToString(), population);
+                series.Points[index].Color = Colors[creatureType];
             }
         }
 
