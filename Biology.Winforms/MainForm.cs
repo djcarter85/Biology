@@ -1,15 +1,20 @@
 ﻿namespace Biology.Winforms
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading;
+    using System.Threading.Tasks;
     using System.Windows.Forms;
     using Biology.Core;
 
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
         private readonly IEnumerator<IReadOnlyDictionary<CreatureType, int>> enumerator;
 
-        public Form1()
+        private CancellationTokenSource cancellationSource;
+
+        public MainForm()
         {
             this.InitializeComponent();
 
@@ -45,13 +50,34 @@
             this.enumerator = populationHistoryDistribution.Sample().GetEnumerator();
         }
 
-        private void Button1_Click(object sender, System.EventArgs e)
+        private async void PlayButton_Click(object sender, EventArgs e)
         {
-            this.enumerator.MoveNext();
+            this.playButton.Enabled = false;
+            this.pauseButton.Enabled = true;
 
-            var populations = this.enumerator.Current;
+            this.cancellationSource = new CancellationTokenSource();
 
-            this.label1.Text = string.Join(", ", populations.Select(kvp => $"{kvp.Key}: {kvp.Value:00}"));
+            while (this.enumerator.MoveNext())
+            {
+                var populations = this.enumerator.Current;
+
+                this.label1.Text = string.Join(", ", populations.Select(kvp => $"{kvp.Key}: {kvp.Value:00}"));
+
+                if (this.cancellationSource.IsCancellationRequested)
+                {
+                    break;
+                }
+
+                await Task.Delay(50);
+            }
+        }
+
+        private void PauseButton_Click(object sender, EventArgs e)
+        {
+            this.playButton.Enabled = true;
+            this.pauseButton.Enabled = false;
+
+            this.cancellationSource.Cancel();
         }
     }
 }
