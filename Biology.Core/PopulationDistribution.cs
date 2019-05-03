@@ -28,14 +28,14 @@
                 var spontaneousBirths = creature.SpontaneousBirthDistribution.Sample() ? 1 : 0;
 
                 var deaths = creature.DeathDistribution(initialPopulation)
-                    .TakeSamples(initialPopulation)
-                    .Count(b => b);
+                    .ToBinomial(initialPopulation)
+                    .Sample();
 
                 resultantPopulations[creature.Type] += spontaneousBirths - deaths;
 
                 var replicationBirths = creature.ReplicationDistribution
-                    .TakeSamples(initialPopulation)
-                    .Count(b => b);
+                    .ToBinomial(initialPopulation)
+                    .Sample();
 
                 var groupBy = creature.MutationDistribution
                     .TakeSamples(replicationBirths)

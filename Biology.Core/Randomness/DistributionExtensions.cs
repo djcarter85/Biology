@@ -11,5 +11,10 @@
                 yield return distribution.Sample();
             }
         }
+
+        public static IDistribution<int> ToBinomial(this IDistribution<bool> bernoulli, int repetitions)
+        {
+            return new Binomial(bernoulli, repetitions);
+        }
     }
 }
